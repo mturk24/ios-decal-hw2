@@ -160,16 +160,16 @@ class ViewController: UIViewController {
 //            myBool = true
 //        }
         someDataStructure.append(sender.content)
-//        if (numBool == 2) {
-//            numBool = 0
-//        }
-//        if (numBool == 0) {
-//            numBool = 1
-//            num1 = Int(sender.content)!
-//        } else if (numBool == 1){
-//           numBool = 2
-//            num2 = Int(sender.content)!
-//        }
+        if (numBool == 2) {
+            numBool = 0
+        }
+        if (numBool == 0) {
+            numBool = 1
+            num1 = Int(sender.content)!
+        } else if (numBool == 1){
+           numBool = 2
+            num2 = Int(sender.content)!
+        }
         resultLabel.text = (sender.content)
 //        result = Int(sender.content)!
     }
@@ -207,6 +207,19 @@ class ViewController: UIViewController {
             plusMinus = true
         }
         if (sender.content == "=") {
+            if (boolInt == 1 && numBool == 2) {
+                result = intCalculate(a: num1!, b: num2!, operation: "+")
+                resultLabel.text = String(result)
+            } else if (boolInt == 2 && numBool == 2) {
+                result = intCalculate(a: num1!, b: num2!, operation: "-")
+                resultLabel.text = String(result)
+            } else if (boolInt == 3 && numBool == 2) {
+                result = intCalculate(a: num1!, b: num2!, operation: "*")
+                resultLabel.text = String(result)
+            } else if (boolInt == 4 && numBool == 2) {
+                result = intCalculate(a: num1!, b: num2!, operation: "/")
+                resultLabel.text = String(result)
+            }
             
             for index in 0...(someDataStructure.count - 1) {
                 if (someDataStructure[index] == "+" && boolInt == 2) {
@@ -229,32 +242,32 @@ class ViewController: UIViewController {
                     }
                     result = result + intCalculate(a: num1!, b: num2!, operation: "/")
                     resultLabel.text = String(result)
-                } else {
-                    if (boolInt == 2) {
-                        boolInt = 0
-                    }
-                    if (myBool == true) {
-                        if someDataStructure[index].range(of: ".") != nil {
-                            doub = Double(someDataStructure[index])!
-                            myBool = false
-                            boolInt = 1
-                        } else {
-                           num1 = Int(someDataStructure[index])!
-                            myBool = false
-                            boolInt = 1
-                        }
-                    } else {
-                        if someDataStructure[index].range(of: ".") != nil {
-                            doub1 = Double(someDataStructure[index])!
-                            myBool = true
-                            boolInt = 2
-                        } else {
-                            num2 = Int(someDataStructure[index])!
-                            myBool = true
-                            boolInt = 2
-                        }
-                        
-                    }
+//                } else {
+//                    if (boolInt == 2) {
+//                        boolInt = 0
+//                    }
+//                    if (myBool == true) {
+//                        if someDataStructure[index].range(of: ".") != nil {
+//                            doub = Double(someDataStructure[index])!
+//                            myBool = false
+//                            boolInt = 1
+//                        } else {
+////                           num1 = Int(someDataStructure[index])!
+//                            myBool = false
+//                            boolInt = 1
+//                        }
+//                    } else {
+//                        if someDataStructure[index].range(of: ".") != nil {
+//                            doub1 = Double(someDataStructure[index])!
+//                            myBool = true
+//                            boolInt = 2
+//                        } else {
+////                            num2 = Int(someDataStructure[index])!
+//                            myBool = true
+//                            boolInt = 2
+//                        }
+//                        
+//                    }
                     
                 }
             }
