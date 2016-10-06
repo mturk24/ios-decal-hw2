@@ -23,6 +23,18 @@ class ViewController: UIViewController {
     //       One data structure is initialized below for reference.
     var someDataStructure: [String] = [""]
     
+    var num1: Int?
+    var num2: Int?
+    var result: Int = 0
+    var doubResult: Double = 0
+    var strResult: String = ""
+    var plusMinus: Bool = true
+    var myBool: Bool = true
+    var boolInt: Int = 0
+    var numBool: Int = 0
+    var operation = ""
+    var doub: Double = 0.0
+    var doub1: Double = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +65,18 @@ class ViewController: UIViewController {
     //       Modify this one or create your own.
     func updateResultLabel(_ content: String) {
         print("Update me like one of those PCs")
+        if (content.characters.count <= 7) {
+            resultLabel.text = content
+        }
+        
     }
+    
+    func checkMaxLength(textField: UITextField!, maxLength: Int) {
+        if ((textField.text!.characters.count) > maxLength) {
+            textField.deleteBackward()
+        }
+    }
+    
     
     
     // TODO: A calculate method with no parameters, scary!
@@ -66,8 +89,53 @@ class ViewController: UIViewController {
     //       Modify this one or create your own.
     func intCalculate(a: Int, b:Int, operation: String) -> Int {
         print("Calculation requested for \(a) \(operation) \(b)")
-        return 0
+        num1 = a
+        num2 = b
+        if  operation == "+" {
+//            resultLabel.text = String(describing: num1 += num2)
+            result = num1! + num2!
+            return result
+        } else if operation == "-" {
+//            resultLabel.text = String(describing: num1 -= num2)
+            result = num1! - num2!
+            return result
+        } else if operation == "*" {
+//            resultLabel.text = String(describing: num1 *= num2)
+            result = num1! * num2!
+            return result
+        } else if operation == "/" {
+//            resultLabel.text = String(describing: num1 /= num2)
+            result =  num1! / num2!
+            return result
+        }
+        
+        return result
     }
+    func doubleCalculate(a: Double, b:Double, operation: String) -> Double {
+        print("Calculation requested for \(a) \(operation) \(b)")
+        doub = a
+        doub1 = b
+        if  operation == "+" {
+            //            resultLabel.text = String(describing: num1 += num2)
+            result = num1! + num2!
+            return Double(result)
+        } else if operation == "-" {
+            //            resultLabel.text = String(describing: num1 -= num2)
+            result = num1! - num2!
+            return Double(result)
+        } else if operation == "*" {
+            //            resultLabel.text = String(describing: num1 *= num2)
+            result = num1! * num2!
+            return Double(result)
+        } else if operation == "/" {
+            //            resultLabel.text = String(describing: num1 /= num2)
+            result =  num1! / num2!
+            return Double(result)
+        }
+        
+        return Double(result)
+    }
+
     
     // TODO: A general calculate method for doubles
     //       Modify this one or create your own.
@@ -80,17 +148,161 @@ class ViewController: UIViewController {
     func numberPressed(_ sender: CustomButton) {
         guard Int(sender.content) != nil else { return }
         print("The number \(sender.content) was pressed")
-        // Fill me in!
+        if strResult.range(of: ".") != nil{
+            strResult = strResult + sender.content
+            resultLabel.text = strResult
+        }
+//        let num = sender.content
+//        if (myBool == true) {
+//            updateResultLabel(resultLabel.text! + num)
+//        } else {
+//            updateResultLabel(num)
+//            myBool = true
+//        }
+        someDataStructure.append(sender.content)
+//        if (numBool == 2) {
+//            numBool = 0
+//        }
+//        if (numBool == 0) {
+//            numBool = 1
+//            num1 = Int(sender.content)!
+//        } else if (numBool == 1){
+//           numBool = 2
+//            num2 = Int(sender.content)!
+//        }
+        resultLabel.text = (sender.content)
+//        result = Int(sender.content)!
     }
     
     // REQUIRED: The responder to an operator button being pressed.
     func operatorPressed(_ sender: CustomButton) {
-        // Fill me in!
+        if (sender.content == "+") {
+            boolInt = 1
+            someDataStructure.append(sender.content)
+//            result = intCalculate(a: num1, b: num2, operation: "+")
+        } else if (sender.content == "-") {
+            boolInt = 2
+            someDataStructure.append(sender.content)
+        } else if (sender.content == "*") {
+            boolInt = 3
+            someDataStructure.append(sender.content)
+        } else if (sender.content == "/") {
+            boolInt = 4
+            someDataStructure.append(sender.content)
+        }
+        if (sender.content == "C") {
+            resultLabel.text = String(calculate())
+            result = 0
+            
+        }
+        if (sender.content == ".") {
+            strResult = String(result) + "."
+            resultLabel.text = strResult
+        }
+        if (sender.content == "+/-" && plusMinus == true) {
+            resultLabel.text = String(result * -1)
+            plusMinus = false
+        } else if (sender.content == "+/-" && plusMinus == false) {
+            resultLabel.text = String(result * 1)
+            plusMinus = true
+        }
+        if (sender.content == "=") {
+            
+            for index in 0...(someDataStructure.count - 1) {
+                if (someDataStructure[index] == "+" && boolInt == 2) {
+                    result = result + intCalculate(a: num1!, b: num2!, operation: "+")
+                    resultLabel.text = String(result)
+                } else if (someDataStructure[index] == "-" && boolInt == 2) {
+                    result = result + intCalculate(a: num1!, b: num2!, operation: "-")
+                    resultLabel.text = String(result)
+                } else if (someDataStructure[index] == "*" && boolInt == 2) {
+                    result = result + intCalculate(a: num1!, b: num2!, operation: "*")
+                    resultLabel.text = String(result)
+                } else if (someDataStructure[index] == "/" && boolInt == 2) {
+                    
+                    if floor(doub) != doub {
+                        doubResult = doubResult + doubleCalculate(a: doub, b: doub1, operation: "/")
+                        resultLabel.text = String(doubResult)
+                    } else {
+                        result = result + Int(doubleCalculate(a: doub, b: doub1, operation: "/"))
+                        resultLabel.text = String(result)
+                    }
+                    result = result + intCalculate(a: num1!, b: num2!, operation: "/")
+                    resultLabel.text = String(result)
+                } else {
+                    if (boolInt == 2) {
+                        boolInt = 0
+                    }
+                    if (myBool == true) {
+                        if someDataStructure[index].range(of: ".") != nil {
+                            doub = Double(someDataStructure[index])!
+                            myBool = false
+                            boolInt = 1
+                        } else {
+                           num1 = Int(someDataStructure[index])!
+                            myBool = false
+                            boolInt = 1
+                        }
+                    } else {
+                        if someDataStructure[index].range(of: ".") != nil {
+                            doub1 = Double(someDataStructure[index])!
+                            myBool = true
+                            boolInt = 2
+                        } else {
+                            num2 = Int(someDataStructure[index])!
+                            myBool = true
+                            boolInt = 2
+                        }
+                        
+                    }
+                    
+                }
+            }
+        }
     }
+    
+        
+            
+            
+        
+//        if (sender.content == "=" && numBool == 2 && boolInt == 1) {
+//            result = intCalculate(a: num1, b: num2, operation: "+")
+//            resultLabel.text = String(result)
+//        }
+//        if (sender.content == "=" && numBool == 2 && boolInt == 2) {
+//            result = intCalculate(a: num1, b: num2, operation: "-")
+//            resultLabel.text = String(result)
+//        }
+//        if (sender.content == "=" && numBool == 2 && boolInt == 3) {
+//            result = intCalculate(a: num1, b: num2, operation: "*")
+//            resultLabel.text = String(result)
+//        }
+//        if (sender.content == "=" && numBool == 2 && boolInt == 4) {
+//            result = intCalculate(a: num1, b: num2, operation: "/")
+//            resultLabel.text = String(result)
+//        }
+        
     
     // REQUIRED: The responder to a number or operator button being pressed.
     func buttonPressed(_ sender: CustomButton) {
-       // Fill me in!
+        
+//        if (sender.content == "+") {
+//            result = intCalculate(a: num1, b: num2, operation: "+")
+//        } else if (sender.content == "-") {
+//            result = intCalculate(a: num1, b: num2, operation: "-")
+//        } else if (sender.content == "*") {
+//            result = intCalculate(a: num1, b: num2, operation: "*")
+//        } else if (sender.content == "/") {
+//            result = intCalculate(a: num1, b: num2, operation: "/")
+//        } else if (sender.content == "C") {
+//            resultLabel.text = String(calculate())
+//            result = 0
+//        }
+//        if (sender.content == "=") {
+//            updateResultLabel(String(result))
+//        }
+        
+       
     }
     
     // IMPORTANT: Do NOT change any of the code below.
